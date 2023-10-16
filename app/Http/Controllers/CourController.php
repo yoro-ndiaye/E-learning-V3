@@ -10,7 +10,7 @@ class CourController extends Controller
 {
     public function index(){
         $cour=Cour::all();
-      
+
         return view('cours.index',compact('cour'));
     }
 
@@ -39,8 +39,44 @@ class CourController extends Controller
             $file->move('images/cours/',$filename);
             $cour->image=$filename;
         }
-       
+
         $cour->save();
+        return redirect()->route('cours.index');
+    }
+    public function update($id){
+        $cour=Cour::find($id);
+        $module=Module::all();
+        return view('cours.update',compact('cour','module'));
+    }
+    public function edit(Request $request){
+        $request->validate([
+            'nomCours'=>'required',
+            'ressource'=>'required',
+            'description'=>'required',
+            'module_id'=>'required',
+        ]);
+
+        $cour=Cour::find($request->id);
+        $cour->nomCours=$request->nomCours;
+        $cour->description=$request->description;
+        $cour->module_id=$request->module_id;
+        $cour->ressource=$request->ressource;
+        if($request->hasFile('imgCours')){
+            $file=$request->file('imgCours');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time().'.'.$extension;
+            $file->move('images/cours/',$filename);
+            $cour->image=$filename;
+        }else{
+            $cour->image=$cour->image;
+        }
+        $cour->save();
+        return redirect()->route('cours.index');
+
+    }
+    public function delete($id){
+        $cour=Cour::find($id);
+        $cour->delete();
         return redirect()->route('cours.index');
     }
 }

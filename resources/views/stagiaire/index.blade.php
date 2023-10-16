@@ -10,10 +10,48 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="container mx-auto">
-                        
+                        <div class="container mx-auto">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                              <!-- Card 1 -->
+                              <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h2 class="text-xl font-semibold text-gray-800">Developpement Web</h2>
+                                <p class="text-2xl font-bold text-blue-500">150</p>
+                                <p class="text-gray-600">25%</p>
+                              </div>
+
+                              <!-- Card 2 -->
+                              <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h2 class="text-xl font-semibold text-gray-800">Bureautique</h2>
+                                <p class="text-2xl font-bold text-blue-500">120</p>
+                                <p class="text-gray-600">20%</p>
+                              </div>
+
+                              <!-- Card 3 -->
+                              <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h2 class="text-xl font-semibold text-gray-800">Markting</h2>
+                                <p class="text-2xl font-bold text-blue-500">90</p>
+                                <p class="text-gray-600">15%</p>
+                              </div>
+
+                              <!-- Card 4 -->
+                              <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h2 class="text-xl font-semibold text-gray-800">Gestion de projet</h2>
+                                <p class="text-2xl font-bold text-blue-500">80</p>
+                                <p class="text-gray-600">13.33%</p>
+                              </div>
+
+                              <!-- Card 5 -->
+                              <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h2 class="text-xl font-semibold text-gray-800">Total</h2>
+                              <p class="text-2xl font-bold text-blue-500">{{ count($stagiaire) }}</p>
+                                <p class="text-gray-600">11.67%</p>
+                              </div>
+                            </div>
+                          </div>
+
                       <div class="flex justify-between items-center mb-4">
                           <!-- Bouton "Ajouter" en haut à droite -->
-                          <a class="bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded" href="{{ route('module.create') }}">
+                          <a class="bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded" href="{{ route('stagiaires.create') }}">
                             Ajouter un stagiaire
                           </a>
                         </div>
@@ -42,22 +80,25 @@
                           </tr>
                         </thead>
                         <tbody>
-                          {{-- @foreach ($module as $module) --}}
+                          @foreach ($stagiaire as $stagiaire)
 
 
                           <tr>
                             <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
-                             {{-- {{ $module->nomModule }} --}}
+                            {{ $stagiaire->prenoms }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
-                            {{-- {{ $module->description}} --}}
+                            {{ $stagiaire->nom }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
-                              <img src="" alt="Image" class="w-16 h-16 object-cover rounded-full">
+                              {{ $stagiaire->email }}
 
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
-                            {{-- {{ $module->domaine->nomDomaine}} --}}
+                                {{ $stagiaire->telephone }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
+                                {{ $stagiaire->domaine->nomDomaine }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
                               <a class="bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded m-2" href="">
@@ -73,7 +114,7 @@
                               </td>
                             <!-- Ajoutez plus de cellules pour chaque ligne de données -->
                           </tr>
-                          {{-- @endforeach --}}
+                          @endforeach
 
                           <!-- Ajoutez plus de lignes de données si nécessaire -->
                         </tbody>

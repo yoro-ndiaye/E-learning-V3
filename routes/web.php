@@ -5,6 +5,7 @@ use App\Http\Controllers\CourController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StagiaireController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,13 +18,13 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -37,6 +38,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/cours', [CourController::class, 'index'])->name('cours.index');
     Route::get('/cours/create', [CourController::class, 'create'])->name('cours.create');
     Route::post('/cours', [CourController::class, 'store'])->name('cours.store');
+    Route::get('/cours/update/{id}',[CourController::class,'update'])->name('cours.update');
+    Route::post('/cours/edit',[CourController::class,'edit'])->name('cours.edit');
+    Route::get('/cours/delete/{id}',[CourController::class,'delete'])->name('cours.delete');
     // ... d'autres routes
 });
 
@@ -63,6 +67,31 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/modules/edit',[ModuleController::class,'edit'])->name('module.edit');
     Route::get('/modules/delete/{id}',[ModuleController::class,'delete'])->name('module.delete');
     // ... d'autres routes
+});
+
+//stagiaires
+Route::group(['middleware' => 'auth'], function () {
+    // Définissez ici vos routes qui nécessitent une authentification
+    Route::get('/stagiaires', [StagiaireController::class, 'index'])->name('stagiaires.index');
+    Route::get('/stagiaires/create', [StagiaireController::class, 'create'])->name('stagiaires.create');
+    Route::post('/stagiaires', [StagiaireController::class, 'store'])->name('stagiaires.store');
+    Route::get('/stagiaires/{id}',[StagiaireController::class,'addmodule'])->name('stagiaires.addmodule');
+    Route::get('/stagiaires/update/{id}',[StagiaireController::class,'update'])->name('stagiaires.update');
+    Route::post('/stagiaires/edit',[StagiaireController::class,'edit'])->name('stagiaires.edit');
+    Route::get('/stagiaires/delete/{id}',[StagiaireController::class,'delete'])->name('stagiaires.delete');
+    // ... d'autres routes
+});
+
+// -----------------------Stagiaires controle connection--------------------------------------------------------
+Route::prefix('')->group(function(){
+    Route::get('/',[StagiaireController::class,'indexlogin'])->name('stagiaires.login_form');
+    Route::post('/loginstagiaire',[StagiaireController::class,'login'])->name('stagiaires.login');
+    Route::get('/dashboardStagiaire',[StagiaireController::class,'dashboard'])->middleware('stagiaire')->name('stagiaires.dashboard');
+    Route::get('/logoutstagiaire',[StagiaireController::class,'logout'])->name('stagiaires.logout');
+    Route::get('/modulestagiaire/{id}',[StagiaireController::class,'module'])->name('stagiaires.modulestagiaire');
+    Route::get('/courstagiaire/{id}',[StagiaireController::class,'cours'])->name('stagiaires.courstagiaire');
+    Route::post('/storestagiaire',[StagiaireController::class,'store'])->name('stagiaires.store');
+
 });
 
 require __DIR__.'/auth.php';

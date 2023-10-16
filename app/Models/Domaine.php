@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Stagiaire;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,12 +12,16 @@ class Domaine extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nomDomaine',  
+        'nomDomaine',
         'description',
     ];
-    
+
     public function modules():BelongsToMany
     {
         return $this->belongsToMany(Module::class);
+    }
+    public function stagings():BelongsToMany
+    {
+        return $this->belongsToMany(Stagiaire::class);
     }
 }

@@ -20,7 +20,7 @@ class Domaine extends Model
     {
         return $this->belongsToMany(Module::class);
     }
-    public function stagings():BelongsToMany
+    public function stagiaires():BelongsToMany
     {
         return $this->belongsToMany(Stagiaire::class);
     }

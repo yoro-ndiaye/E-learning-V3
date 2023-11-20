@@ -10,10 +10,10 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="container mx-auto">
-                        
+
                       <div class="flex justify-between items-center mb-4">
                           <!-- Bouton "Ajouter" en haut à droite -->
-                          <a class="bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded" href="{{ route('module.create') }}">
+                          <a class=" bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded" href="{{ route('module.create') }}">
                             Ajouter un stagiaire
                           </a>
                         </div>

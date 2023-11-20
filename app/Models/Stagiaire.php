@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\TacheStagiaire;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Stagiaire extends Authenticatable
 {
@@ -32,6 +33,9 @@ class Stagiaire extends Authenticatable
     public function domaine():BelongsTo
     {
         return $this->belongsTo(Domaine::class);
+    }
+    public function tacheStagiaire(){
+        return $this->hasMany(TacheStagiaire::class);
     }
 
      /**

@@ -8,6 +8,7 @@ use App\Models\Module;
 use App\Models\Domaine;
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class StagiaireController extends Controller
@@ -15,7 +16,20 @@ class StagiaireController extends Controller
     public function index(){
 
         $stagiaire=Stagiaire::all();
-        return view('stagiaire.index', compact('stagiaire'));
+        $counts = DB::table('stagiaires')
+        ->join('domaines', 'domaines.id', '=', 'stagiaires.domaine_id')
+        ->select('domaines.nomDomaine', DB::raw('count(*) as count'))
+        ->groupBy('domaines.nomDomaine')
+        ->get();
+
+
+
+$data=[
+    'stagiaire'=>$stagiaire,
+    'count'=>$counts
+];
+
+        return view('stagiaire.index', $data);
     }
 
     public function create(){
@@ -38,7 +52,9 @@ class StagiaireController extends Controller
         $stagiaire->sexe=$request->sexe;
         $stagiaire->email=$request->email;
         $stagiaire->domaine_id=$request->domaine_id;
+
         $stagiaire->save();
+
         return redirect()->route('stagiaires.index');
     }
 
@@ -58,8 +74,6 @@ class StagiaireController extends Controller
 
         $check=$request->all();
 
-
-
         if(Auth::guard('stagiaire')->attempt(['email'=>$check['email'],
                                             'password'=>$request->password])){
 
@@ -70,13 +84,7 @@ class StagiaireController extends Controller
             return back()->with('error', 'email ou Mot de passe incorrecte');
         }
 
-        // $user=Stagiaire::where('email', $request->email)->first();
-        // if($user){
-        //     if (Hash::check($request->password, $user->mot_de_passe)){
-        //         return redirect()->route('stagiaires.dasboard');
-        //     }else{
-        //         return redirect()->route('stagiaires.login_form')->with('error', 'Mot de passe incorrecte');
-        // }
+
 
     }
 
@@ -100,5 +108,46 @@ public function cours($id){
 
 
     return view('stagiaire.cours', compact('cours','modules'));
+}
+
+public function showStagiaire($id){
+    $stagiaire=Stagiaire::find($id);
+   // dd($stagiaire->domaine->nomDomaine);
+    $tacheStagiaires = DB::table('tache_stagiaires')
+    ->join('tache_files', 'tache_stagiaires.id', 'tache_files.tache_stagiaires_id')
+    ->join('cours', 'cours.id', 'tache_stagiaires.cour_id')
+    ->where('tache_stagiaires.stagiaire_id', $id)
+    ->select('tache_stagiaires.*', 'cours.*', 'tache_files.*')
+    ->orderby('tache_stagiaires.id', 'desc')
+    ->get();
+
+    return view('stagiaire.showStagiaire', compact('stagiaire','tacheStagiaires'));
+}
+
+public function update($id){
+    $domaine= Domaine::all();
+    $stagiaire=Stagiaire::find($id);
+
+    return view('stagiaire.update', compact('stagiaire','domaine'));
+
+}
+
+public function editStagiaire(Request $request){
+    $request->validate([
+        'prenoms'=>'required',
+        'nom'=>'required',
+        'email'=>'required',
+        'domaine_id'=>'required',
+    ]);
+    $stagiaire=Stagiaire::find($request->id);
+    $stagiaire->prenoms=$request->prenoms;
+    $stagiaire->nom=$request->nom;
+    $stagiaire->sexe=$request->sexe;
+    $stagiaire->email=$request->email;
+    $stagiaire->domaine_id=$request->domaine_id;
+    $stagiaire->save();
+
+    return redirect()->route('stagiaires.index');
+
 }
 }

@@ -5,40 +5,28 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+    {{-- <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8"> --}}
+            <div class="mt-20 flex container mx-auto justify-center bg-gray-800   rounded-3xl">
+
+                {{-- <div class="container mx-auto sm:px-6 lg:px-8"> --}}
+            {{-- <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"> --}}
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="container mx-auto">
+                    <div class="container-flex mx-auto">
                         <div class="container mx-auto">
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                               <!-- Card 1 -->
-                              <div class="bg-white p-4 rounded-lg shadow-md">
-                                <h2 class="text-xl font-semibold text-gray-800">Developpement Web</h2>
-                                <p class="text-2xl font-bold text-blue-500">150</p>
-                                <p class="text-gray-600">25%</p>
+                            @foreach ($count as $count )
+                            <div class="bg-white p-4 rounded-lg shadow-md">
+                                <h2 class="text-xl font-semibold text-gray-800">{{ $count->nomDomaine }}</h2>
+                                <p class="text-2xl font-bold text-blue-500">{{ $count->count }}</p>
+                                <p class="text-gray-600">{{ number_format(($count->count / count($stagiaire) * 100), 2) }} %</p>
                               </div>
+
+                            @endforeach
 
                               <!-- Card 2 -->
-                              <div class="bg-white p-4 rounded-lg shadow-md">
-                                <h2 class="text-xl font-semibold text-gray-800">Bureautique</h2>
-                                <p class="text-2xl font-bold text-blue-500">120</p>
-                                <p class="text-gray-600">20%</p>
-                              </div>
 
-                              <!-- Card 3 -->
-                              <div class="bg-white p-4 rounded-lg shadow-md">
-                                <h2 class="text-xl font-semibold text-gray-800">Markting</h2>
-                                <p class="text-2xl font-bold text-blue-500">90</p>
-                                <p class="text-gray-600">15%</p>
-                              </div>
-
-                              <!-- Card 4 -->
-                              <div class="bg-white p-4 rounded-lg shadow-md">
-                                <h2 class="text-xl font-semibold text-gray-800">Gestion de projet</h2>
-                                <p class="text-2xl font-bold text-blue-500">80</p>
-                                <p class="text-gray-600">13.33%</p>
-                              </div>
 
                               <!-- Card 5 -->
                               <div class="bg-white p-4 rounded-lg shadow-md">
@@ -51,11 +39,11 @@
 
                       <div class="flex justify-between items-center mb-4">
                           <!-- Bouton "Ajouter" en haut à droite -->
-                          <a class="bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded" href="{{ route('stagiaires.create') }}">
+                          <a class=" mt-3 bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded" href="{{ route('stagiaires.create') }}">
                             Ajouter un stagiaire
                           </a>
                         </div>
-                      <table class="min-w-full">
+                      <table class="min-w-full ">
                         <thead>
                           <tr>
                             <th class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -101,10 +89,10 @@
                                 {{ $stagiaire->domaine->nomDomaine }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
-                              <a class="bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded m-2" href="">
+                              <a class="bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded m-2" href="{{ route('stagiaires.showStagiaire', $stagiaire->id) }}">
                                 <i class="fas fa-eye ml-1"></i>
                               </a>
-                              <a class="bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded mr-2" href="">
+                              <a class="bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded mr-2" href="{{ route('stagiaires.updateStagiaire', $stagiaire->id) }}">
                                 <i class="fas fa-edit ml-1"></i>
                               </a>
                               <a class="bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded" href="">
@@ -119,8 +107,8 @@
                           <!-- Ajoutez plus de lignes de données si nécessaire -->
                         </tbody>
                       </table>
-                    </div>
-                  </div>
+                    {{-- </div>
+                  </div> --}}
             </div>
         </div>
     </div>

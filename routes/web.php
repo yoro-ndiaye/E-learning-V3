@@ -6,6 +6,8 @@ use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StagiaireController;
+use App\Http\Controllers\TacheStagiaireController;
+use App\Http\Controllers\TemporalyImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,23 +76,30 @@ Route::group(['middleware' => 'auth'], function () {
     // Définissez ici vos routes qui nécessitent une authentification
     Route::get('/stagiaires', [StagiaireController::class, 'index'])->name('stagiaires.index');
     Route::get('/stagiaires/create', [StagiaireController::class, 'create'])->name('stagiaires.create');
-    Route::post('/stagiaires', [StagiaireController::class, 'store'])->name('stagiaires.store');
-    Route::get('/stagiaires/{id}',[StagiaireController::class,'addmodule'])->name('stagiaires.addmodule');
-    Route::get('/stagiaires/update/{id}',[StagiaireController::class,'update'])->name('stagiaires.update');
-    Route::post('/stagiaires/edit',[StagiaireController::class,'edit'])->name('stagiaires.edit');
-    Route::get('/stagiaires/delete/{id}',[StagiaireController::class,'delete'])->name('stagiaires.delete');
+    Route::post('/stagiaires', [StagiaireController::class, 'store'])->name('stagiaires.ajouter');
+    Route::get('/stagiaires/{id}',[StagiaireController::class,'showStagiaire'])->name('stagiaires.showStagiaire');
+    Route::get('/stagiaires/update/{id}',[StagiaireController::class,'update'])->name('stagiaires.updateStagiaire');
+    Route::post('/stagiaires/edit',[StagiaireController::class,'editStagiaire'])->name('stagiaires.editeStagiaire');
+    Route::get('/stagiaires/delete/{id}',[StagiaireController::class,'deleteStagiaire'])->name('stagiaires.deleteStagiaire');
     // ... d'autres routes
 });
 
 // -----------------------Stagiaires controle connection--------------------------------------------------------
-Route::prefix('')->group(function(){
-    Route::get('/',[StagiaireController::class,'indexlogin'])->name('stagiaires.login_form');
-    Route::post('/loginstagiaire',[StagiaireController::class,'login'])->name('stagiaires.login');
-    Route::get('/dashboardStagiaire',[StagiaireController::class,'dashboard'])->middleware('stagiaire')->name('stagiaires.dashboard');
-    Route::get('/logoutstagiaire',[StagiaireController::class,'logout'])->name('stagiaires.logout');
-    Route::get('/modulestagiaire/{id}',[StagiaireController::class,'module'])->name('stagiaires.modulestagiaire');
-    Route::get('/courstagiaire/{id}',[StagiaireController::class,'cours'])->name('stagiaires.courstagiaire');
-    Route::post('/storestagiaire',[StagiaireController::class,'store'])->name('stagiaires.store');
+Route::get('/',[StagiaireController::class,'indexlogin'])->name('stagiaires.login_form');
+Route::post('/loginstagiaire',[StagiaireController::class,'login'])->name('stagiaires.login');
+
+Route::group(['middleware' => 'stagiaire'],function(){
+Route::get('/dashboardStagiaire',[StagiaireController::class,'dashboard'])->name('stagiaires.dashboard');
+Route::get('/logoutstagiaire',[StagiaireController::class,'logout'])->name('stagiaires.logout');
+Route::get('/modulestagiaire/{id}',[StagiaireController::class,'module'])->name('stagiaires.modulestagiaire');
+Route::get('/courstagiaire/{id}',[StagiaireController::class,'cours'])->name('stagiaires.courstagiaire');
+Route::post('/storestagiaire',[StagiaireController::class,'store'])->name('stagiaires.store');
+Route::post('/updatestagiaire/{id}',[StagiaireController::class,'update'])->name('stagiaires.update');
+Route::get('/gettache/{id}',[TacheStagiaireController::class,'gettache'])->name('stagiaires.gettache');
+Route::post('/addfiletache',[TacheStagiaireController::class,'addfiletache'])->name('stagiaires.addfiletache');
+Route::get('allfiletaches/{id}',[TacheStagiaireController::class,'allfiletaches'])->name('stagiaires.allfiletaches');
+Route::post('/temporariyimage',[TemporalyImageController::class,'store'])->name('stagiaires.temporariyimage');
+Route::delete('/deletetemporariyimage',[TemporalyImageController::class,'deletetmpfile'])->name('stagiaires.removetemporariyimage');
 
 });
 

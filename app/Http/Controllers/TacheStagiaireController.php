@@ -78,7 +78,7 @@ public function allfiletaches($id){
     ->orderby('tache_stagiaires.id', 'desc')
     ->paginate(10);
 
-    //  dd($tacheStagiaires);
+    //   dd($tacheStagiaires);
     return view('stagiaire.allfiletaches',compact('tacheStagiaires'));
 }
 

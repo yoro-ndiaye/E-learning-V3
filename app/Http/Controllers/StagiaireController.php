@@ -45,6 +45,7 @@ $data=[
             'email'=>'required',
             'domaine_id'=>'required',
 
+
         ]);
         $stagiaire=new Stagiaire;
         $stagiaire->prenoms=$request->prenoms;
@@ -70,25 +71,35 @@ $data=[
             'email'=>'required',
             'password'=>'required',
         ]);
-
+        $credentials = $request->only('email', 'password');
+        $stagiaire = DB::table('stagiaires')->where('email', $credentials['email'])->first();
 
         $check=$request->all();
+        if ($stagiaire && $this->isUserActive($stagiaire)) {
 
-        if(Auth::guard('stagiaire')->attempt(['email'=>$check['email'],
-                                            'password'=>$request->password])){
-
-
-
-            return redirect()->route('stagiaires.dashboard', )->with('success', 'Connexion reussie');
-        }else{
-            return back()->with('error', 'email ou Mot de passe incorrecte');
+            if (Auth::guard('stagiaire')->attempt($credentials)) {
+                return redirect()->route('stagiaires.dashboard')->with('success', 'Connexion réussie');
+            } else {
+                return back()->with('error', 'Email ou mot de passe incorrect');
+            }
+        } else {
+            // L'utilisateur n'est pas actif, rediriger avec un message d'erreur
+            return back()->with('error', 'L\'utilisateur n\'est pas actif. Veuillez contacter le support.');
         }
-
 
 
     }
 
+    // pour verifier si l'utilisateur est actif
+    public function isUserActive($user)
+    {
+        if($user->status == 0){
+            return false;
+        }else{
+            return true;
+        }
 
+    }
 public function dashboard(){
     return view('stagiaire.dashboard');
 }
@@ -112,7 +123,7 @@ public function cours($id){
 
 public function showStagiaire($id){
     $stagiaire=Stagiaire::find($id);
-   // dd($stagiaire->domaine->nomDomaine);
+
     $tacheStagiaires = DB::table('tache_stagiaires')
     ->join('tache_files', 'tache_stagiaires.id', 'tache_files.tache_stagiaires_id')
     ->join('cours', 'cours.id', 'tache_stagiaires.cour_id')
@@ -149,5 +160,77 @@ public function editStagiaire(Request $request){
 
     return redirect()->route('stagiaires.index');
 
+}
+public function edit($id){
+    $stagiaire=Stagiaire::find($id);
+    return view('stagiaire.edit', compact('stagiaire'));
+}
+
+public function updateProfil(Request $request){
+    $stagiaire=Stagiaire::find($request->id);
+    $stagiaire->date_naissance=$request->date_naissance;
+    $stagiaire->lieu_naissance=$request->lieu_naissance;
+    $stagiaire->adresse=$request->adresse;
+
+    if ($request->hasFile('photo')) {
+        $file = $request->file('photo');
+        $extension = $file->getClientOriginalExtension();
+        $filename = time() . '.' . $extension;
+        $file->move('photoprofil', $filename);
+        $stagiaire->photo = $filename;
+    }
+
+    $stagiaire->save();
+    return redirect()->route('stagiaires.dashboard');
+}
+
+public function changemotdepasse($id){
+    $stagiaire=Stagiaire::find($id);
+    return view('stagiaire.changemotdepasse', compact('stagiaire'));
+
+}
+public function updatepassword(Request $request){
+
+    $stagiaire=Stagiaire::find($request->id);
+    $oldPassword = $request->current_password;
+    $newPassword = $request->password;
+    $confirmpassword= $request->confirm_password;
+
+    if (Hash::check($oldPassword, $stagiaire->password)) {
+        // Mettre à jour le mot de passe
+
+        if ($confirmpassword != $newPassword) {
+
+            return redirect()->route('stagiaires.changemotdepasse',$request->id)->with('identique', 'Les mots de passe ne sont pas identiques.');
+        }else {
+            $stagiaire->password=Hash::make($newPassword);
+            $stagiaire->save();
+            return redirect()->route('stagiaires.dashboard')->with('success', 'Mot de passe mis à jour avec succès.');
+
+    }
+        // Rediriger avec un message de succès
+        return redirect()->route('stagiaires.changemotdepasse',$request->id)->with('success', 'Mot de passe mis à jour avec succès.');
+    } else {
+        // Rediriger avec un message d'erreur
+        return redirect()->route('stagiaires.changemotdepasse',$request->id)->with('errore', 'Ancien mot de passe incorrect.');
+    }
+}
+public function etat($id){
+    $stagiaire=Stagiaire::find($id);
+    if ($stagiaire->status == 0) {
+        $stagiaire->status = 1;
+        $stagiaire->save();
+    }else {
+        $stagiaire->status = 0;
+        $stagiaire->save();
+    }
+    return redirect()->route('stagiaires.index');
+}
+// resete mot de passe
+public function resetmotdepasse($id) {
+    $stagiaire=Stagiaire::find($id);
+    $stagiaire->password = Hash::make('passer123');
+    $stagiaire->save();
+    return back()->with('success', 'Mot de passe mis à jour avec succès.');
 }
 }

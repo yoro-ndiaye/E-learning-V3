@@ -26,7 +26,7 @@ class Stagiaire extends Authenticatable
                              'telephone',
                              'photo',
                              'email',
-                             'mot_de_passe'
+                             'password'
     ];
 
 

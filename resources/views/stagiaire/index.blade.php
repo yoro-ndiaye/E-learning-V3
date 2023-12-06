@@ -62,6 +62,9 @@
                                 domaine
                                   </th>
                                   <th class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    etat
+                                      </th>
+                                  <th class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     option
                                       </th>
                             <!-- Ajoutez plus d'en-têtes de colonnes si nécessaire -->
@@ -87,6 +90,12 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
                                 {{ $stagiaire->domaine->nomDomaine }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
+                                <a href="{{ route('stagiaires.etat',$stagiaire->id) }}"  class="text-gray-600  p-2 rounded-2xl {{ $stagiaire->status ? "bg-green-600" : "bg-red-600" }}">
+                               {{ $stagiaire->status ? "Actif" : "Inactif" }}
+                                </a>
+
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
                               <a class="bg-indigo-600 hover:bg-indigo-600  text-gray-400 hover:text-white font-bold py-2 px-4 rounded m-2" href="{{ route('stagiaires.showStagiaire', $stagiaire->id) }}">

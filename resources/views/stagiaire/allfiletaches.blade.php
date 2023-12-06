@@ -52,7 +52,7 @@
                         {{ $c->tacheDescription}}
                 </td>
                 <td class="px-6 py-4 text-white whitespace-pre-line border-b border-b border-gray-300">
-                    <a href="{{ $c->name }}" target="_blank">
+                    <a href="localhost:8000/{{ asset('upload') }}/ {{$c->name }}">
                 {{ $c->name }}
 
             </a>

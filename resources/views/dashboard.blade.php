@@ -36,6 +36,9 @@
                                 domaine
                                   </th>
                                   <th class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    etat
+                                      </th>
+                                  <th class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     option
                                       </th>
                             <!-- Ajoutez plus d'en-têtes de colonnes si nécessaire -->

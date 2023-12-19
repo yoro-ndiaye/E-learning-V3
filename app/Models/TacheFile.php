@@ -15,8 +15,8 @@ class TacheFile extends Model
         'path',
     ];
 
-    public function tacheStagiaire():BelongsTo
+    public function tacheStagiaire()
     {
-        return $this->belongsTo(TacheStagiaire::class);
+        return $this->belongsTo(TacheStagiaire::class, 'tache_stagiaires_id');
     }
 }

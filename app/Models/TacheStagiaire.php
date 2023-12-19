@@ -19,18 +19,19 @@ class TacheStagiaire extends Model
         'tacheDescription'
     ];
 
-    public function stagiaire():BelongsTo
+ 
+    public function stagiaire()
     {
-        return $this->belongsTo(Stagiaire::class);
+        return $this->belongsTo(Stagiaire::class, 'stagiaire_id');
     }
 
-    public function cour():BelongsTo
+    public function cour()
     {
-        return $this->belongsTo(Cour::class);
+        return $this->belongsTo(Cour::class, 'cour_id');
     }
 
-    public function tachefiles():BelongsToMany
+    public function tacheFiles()
     {
-        return $this->belongsToMany(TacheFile::class);
+        return $this->hasMany(TacheFile::class, 'tache_stagiaires_id');
     }
 }

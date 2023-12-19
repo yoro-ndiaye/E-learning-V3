@@ -7,6 +7,8 @@ use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StagiaireController;
 use App\Http\Controllers\TacheStagiaireController;
+use App\Http\Controllers\ActualiteController;
+use App\Http\Controllers\Actualites\DetailController;
 use App\Http\Controllers\TemporalyImageController;
 
 /*
@@ -104,9 +106,22 @@ Route::get('/gettache/{id}',[TacheStagiaireController::class,'gettache'])->name(
 Route::post('/addfiletache',[TacheStagiaireController::class,'addfiletache'])->name('stagiaires.addfiletache');
 Route::get('allfiletaches/{id}',[TacheStagiaireController::class,'allfiletaches'])->name('stagiaires.allfiletaches');
 Route::get('showtache/{id}',[TacheStagiaireController::class,'showtache'])->name('stagiaires.showtache');
+// routes actualites by yoro-------
+
+Route::get('/actualites', [ActualiteController::class, 'index'])->name('actualites.index');
+
+
+// routes/web.php
+
+
+
+Route::get('/actualites/details/{tacheStagiaire}', [DetailController::class, 'show'])->name('actualites.details.show');
+
 // Route::post('/temporariyimage',[TemporalyImageController::class,'store'])->name('stagiaires.temporariyimage');
 // Route::delete('/deletetemporariyimage',[TemporalyImageController::class,'deletetmpfile'])->name('stagiaires.removetemporariyimage');
 
 });
+
+
 
 require __DIR__.'/auth.php';

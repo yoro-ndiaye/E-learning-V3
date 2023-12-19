@@ -8,7 +8,7 @@
 <div class=" flex container mx-auto justify-center bg-gray-700   rounded-3xl">
 
     <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-semibold text-white p-5">Vous devait partager ici les document concernant le cour oubien un URL pour acceder au document </h1>
+    <h1 class="text-2xl font-semibold text-white text-center p-5">Vous devait partager ici les document concernant le cour oubien un URL pour acceder au document </h1>
 
         <form action="{{ route("stagiaires.addfiletache") }}" method="post" enctype="multipart/form-data" id="form" >
             @csrf
@@ -27,7 +27,7 @@
            <div class=" mb-6">
             <label for="url" class="block text-white text-sm font-bold mb-2">file (on peut ajouter plusieur fichiers en meme temp )</label>
             {{-- <input type="file" id="file" name="tachefile" class="filepond" multiple credits="false"> --}}
-            <input type="file" name="fichier[]" accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" multiple  id="upload" class="file-input p-5 text-white  border border-gray-300 rounded" style="">
+            <input type="file" name="fichier[]" accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" multiple  id="upload" class="file-input p-5 text-white  border border-gray-300 rounded">
 
             {{-- <input type="file" id="" name="tachefile" class="text-gray-700 w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500" multiple credits="false"> --}}
            </div>
@@ -69,17 +69,7 @@ document.getElementById("submit-button").addEventListener("click", function () {
 });
 
 
-FilePond.setOptions({
-    server:{
-        process:'{{ route("stagiaires.temporariyimage") }}',
-        revert:'{{ route("stagiaires.removetemporariyimage") }}',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        }
-    }
 
-
-})
 </script>
 
 @endsection

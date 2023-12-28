@@ -1,91 +1,184 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body >
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <!-- Scripts -->
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+  <style>
+    /* des règles media queries pour les petits écrans by yoro */
+    @media screen and (max-width: 768px) {
+      body {
+        flex-direction: column-reverse;
+      }
+
+      .right-side {
+        order: -1;
+      }
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+    .left-side {
+      flex: 1;
+      background: url('img/yoro.jpg') center/cover fixed;
+      position: relative;
+      overflow: hidden;
+      font-weight: bold;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 22px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      filter: blur(0px);
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 69, 0, 0.67);
+    }
+
+    .content {
+      text-align: center;
+      color: white;
+      z-index: 1;
+    }
+
+    .right-side {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #f4f4f4;
+    }
+
+    .logo {
+      max-width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .login-form {
+      width: 300px;
+      padding: 20px;
+      background-color: white;
+      color: #FF4500;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .login-form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-top-right-radius: 15px;
+      box-sizing: border-box;
+    }
+
+    .login-form button {
+      width: 100%;
+      padding: 10px;
+      background-color: #FF4500;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
 
+    .titre-banner-connexion {
+      font-family: "Montserrat", sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 88px;
+      line-height: 99.5%;
+      color: #fff;
+    }
 
+    .titre-banner-connexion2 {
+      font-family: "Montserrat", sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 48px;
+      line-height: 99.5%;
+      color: #FF4500;
+    }
+  </style>
+</head>
 
+<body>
 
-<div class="flex  bg-gray-300   rounded-sm rounded-3xl">
-
-
-     <div class="w-1/2 h-screen text-gray-900 dark:text-gray-100 first-line: ">
-
-            <!-- Formulaire pour ajouter un domaine -->
-            <img  src="{{ asset('img/acc.jpg') }}" alt="Image" class="h-screen w-full">
-
-
+  <!-- Left side with by yoro-->
+  <div class="left-side">
+    <div class="overlay"></div>
+    <div class="content">
+      <h1 class="titre-banner-connexion ">Defarsci</h1>
+      <p class="">Transformez vos idées en réalité</p>
     </div>
-    <div class="w-1/2 text-gray-900 dark:text-gray-100 pt-20 mt-10">
+  </div>
 
-      <div class="flex justify-center">
-        <img src="{{ asset('img/logo-defarsci.png') }}" alt="" srcset="" class=" h-22 w-20">
-      </div>
-
-            <!-- Formulaire pour ajouter un domaine -->
-            <div class="p-10 text-gray-900 dark:text-gray-100 m-12 ">
-              @if (Session::has('error'))
-
-              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                <strong class="font-bold">Erreur!</strong>
-                <span class="block sm:inline">{{ Session::get('error') }}</span>
-              </div>
+  <!-- Right side by yoro -->
 
 
-             @endif
-              <div>
-                <h4 class="text-2xl text-black font-semibold p-3">Utilisez l'email que vous avez donner l'hors de l'entretien pour vous connecter et pour le mot de passe c'est <strong> passer123</strong></h4>
-              </div>
-            <form action="{{ route('stagiaires.login') }}" method="POST" class=" mx-auto p-4 bg-white rounded shadow-md min-w-full" enctype="multipart/form-data" >
-             @csrf
-                {{-- <span class="text-xl font-semibold mb-4 text-white font-bold py-2 px-4 rounded bg-indigo-600">Ajouter un Cour</span> --}}
-
-              <!-- Champ d'entrée pour le nom de domaine -->
-              <div class="mb-4">
-                <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Adresse e-mail:</label>
-                <input type="email" id="email" name="email" class="text-gray-700 w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
-                @error('email')
-                <p class="text-red-500 text-xs italic">{{ $message }}</p>
-
-                @enderror
-            </div>
-              <div class="mb-4">
-                <label for="password" class="block text-gray-700 text-sm font-semibold mb-2">Mot de passe:</label>
-                <input type="password" id="password" name="password" class="text-gray-700 w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
-            @error('password')
-            <p class="text-red-500 text-xs italic">{{ $message }}</p>
-
-            @enderror
-            </div>
-              <div class="mb-6 w-1/2 mx-auto">
-                <button type="submit" class="w-full bg-gray-800 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:border-blue-500">
-                  Connexion
-                </button>
-              </div>
-              {{-- <p class="text-gray-600 text-sm">Pas encore de compte ? <a href="#" class="text-blue-500">Inscrivez-vous</a></p> --}}
-            </form>
-          </div>
-          </div>
-
+  <div class="right-side">
+    <img class="logo" src="{{ asset('img/logo-defarsci.png') }}" alt="" srcset="" class=" h-22 w-20">
+    @if (Session::has('error'))
+    <div role="alert">
+      <strong>Erreur!</strong>
+      <span>{{ Session::get('error') }}</span>
     </div>
+    @endif
+    <div>
+      <h2 class="titre-banner-connexion2 p-3">Connectez-vous</h2>
+      <h4 class="text-center p-3" style="color: grey;">le mot de passe c'est <strong style="color:#FF4500 ;">passer123</strong></h4>
+    </div>
+    <div class="login-form">
+      <form action="{{ route('stagiaires.login') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div>
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" name="email">
+          @error('email')
+          <p>{{ $message }}</p>
+          @enderror
+        </div>
+        <div>
+          <label for="password">Mot de passe:</label>
+          <input type="password" id="password" name="password">
+          @error('password')
+          <p>{{ $message }}</p>
+          @enderror
+        </div>
+        <div>
+          <button type="submit">Connexion</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
+</body>
 
-
-
-    </body>
 </html>

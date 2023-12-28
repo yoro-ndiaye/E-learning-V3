@@ -116,6 +116,8 @@ Route::get('/actualites', [ActualiteController::class, 'index'])->name('actualit
 
 
 Route::get('/actualites/details/{tacheStagiaire}', [DetailController::class, 'show'])->name('actualites.details.show');
+Route::post('/actualites/details/{tacheStagiaire}/comment', [DetailController::class, 'comment'])->name('actualites.details.comment');
+Route::get('/actualites/details/delete/{comment}', [DetailController::class, 'deleteComment'])->name('comment.delete');
 
 // Route::post('/temporariyimage',[TemporalyImageController::class,'store'])->name('stagiaires.temporariyimage');
 // Route::delete('/deletetemporariyimage',[TemporalyImageController::class,'deletetmpfile'])->name('stagiaires.removetemporariyimage');

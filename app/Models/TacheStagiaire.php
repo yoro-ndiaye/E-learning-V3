@@ -34,4 +34,9 @@ class TacheStagiaire extends Model
     {
         return $this->hasMany(TacheFile::class, 'tache_stagiaires_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->latest();
+    }
 }

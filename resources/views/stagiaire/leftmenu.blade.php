@@ -72,6 +72,8 @@
     <title>Dashboard</title>
     <meta name="author" content="David Grzyb">
     <meta name="description" content="">
+    <!-- fontawesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <!-- Tailwind -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     {{-- dropzone --}}

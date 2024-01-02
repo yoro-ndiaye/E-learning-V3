@@ -171,6 +171,7 @@ public function updateProfil(Request $request){
     $stagiaire->date_naissance=$request->date_naissance;
     $stagiaire->lieu_naissance=$request->lieu_naissance;
     $stagiaire->adresse=$request->adresse;
+    $stagiaire->telephone=$request->telephone;
 
     if ($request->hasFile('photo')) {
         $file = $request->file('photo');

@@ -1,4 +1,13 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<section class="fix  fixed-top">
+<header class="header1">
+    <h1>DEFARSCI</h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Rechercher">
+        <button>Rechercher</button>
+    </div>
+</header>
+
+<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 ">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -13,22 +22,22 @@
                 <!-- Navigation Links -->
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('stagiaires.index')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('stagiaires.index')" :active="request()->routeIs('dashboard')" class="fw-bold fs-5">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('domaines.index')" :active="request()->routeIs('domaines.index')">
+                    <x-nav-link :href="route('domaines.index')" :active="request()->routeIs('domaines.index')" class="fw-bold fs-5">
                         {{ __('Domaines') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('module.index')" :active="request()->routeIs('module.index')">
+                    <x-nav-link :href="route('module.index')" :active="request()->routeIs('module.index')" class="fw-bold fs-6">
                         {{ __('Module') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('cours.index')" :active="request()->routeIs('cours.index')">
+                    <x-nav-link :href="route('cours.index')" :active="request()->routeIs('cours.index')" class="fw-bold ">
                         {{ __('Cours') }}
                     </x-nav-link>
                 </div>
@@ -38,7 +47,7 @@
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white fw-bold dark:text-gray-400 bg-primary dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150" style="border-radius: 20px;">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ml-1">
@@ -58,8 +67,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -81,21 +89,27 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('stagiaires.index')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden p-3">
 
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
+        <!-- Responsive Navigation Menu -->
+        <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden">
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('stagiaires.index')" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
 
-            <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('domaines.index')" :active="request()->routeIs('domaines.index')">
+                    {{ __('Domaines') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('module.index')" :active="request()->routeIs('module.index')">
+                    {{ __('Module') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('cours.index')" :active="request()->routeIs('cours.index')">
+                    {{ __('Cours') }}
+                </x-responsive-nav-link>
+
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
@@ -104,13 +118,16 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Deconnection') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
+
+            <!-- ... (le reste de ton code) -->
         </div>
+
     </div>
-</nav>
+</nav><br>
+</section>

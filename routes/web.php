@@ -104,6 +104,7 @@ Route::get('/changemotdepassestagiaire/{id}',[StagiaireController::class,'change
 Route::post('/updatepasswordstagiaire',[StagiaireController::class,'updatepassword'])->name('stagiaires.updatepassword');
 Route::get('/gettache/{id}',[TacheStagiaireController::class,'gettache'])->name('stagiaires.gettache');
 Route::post('/addfiletache',[TacheStagiaireController::class,'addfiletache'])->name('stagiaires.addfiletache');
+Route::patch('/update-etat/{cours}', [StagiaireController::class, 'updateEtat'])->name('update.etat');
 Route::get('allfiletaches/{id}',[TacheStagiaireController::class,'allfiletaches'])->name('stagiaires.allfiletaches');
 Route::get('showtache/{id}',[TacheStagiaireController::class,'showtache'])->name('stagiaires.showtache');
 // routes actualites by yoro-------

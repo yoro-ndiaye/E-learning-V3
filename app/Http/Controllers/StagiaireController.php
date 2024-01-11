@@ -21,9 +21,6 @@ class StagiaireController extends Controller
         ->select('domaines.nomDomaine', DB::raw('count(*) as count'))
         ->groupBy('domaines.nomDomaine')
         ->get();
-
-
-
 $data=[
     'stagiaire'=>$stagiaire,
     'count'=>$counts
@@ -45,7 +42,7 @@ $data=[
             'email'=>'required',
             'domaine_id'=>'required',
 
-
+            
         ]);
         $stagiaire=new Stagiaire;
         $stagiaire->prenoms=$request->prenoms;
@@ -118,7 +115,24 @@ public function cours($id){
     $modules=Module::find($id);
 
 
-    return view('stagiaire.cours', compact('cours','modules'));
+    // Recupere le stagiaire connecté
+    $stagiaireConnecte = Auth::guard('stagiaire')->user(); 
+    //recupere l'id du stagiaire connecté
+    $stagiaire =  $stagiaireConnecte->id;
+    //recuperation les cours terminés
+    $coursDuStagiaire = Cour::where('module_id', $id)
+    ->where('etat', 'terminé')
+    ->count();
+//recuperation du nombre de cours en fonction des modules
+    $nbrcours = Cour::where('module_id', $id)->count();
+    //on verifie si le nbre de cours total est different de zero
+    if($nbrcours != 0){
+        $pourcentageProgression = round(($coursDuStagiaire*100)/$nbrcours);
+    }else{
+        $pourcentageProgression = 0;
+    }
+    //dd($pourcentageProgression);
+    return view('stagiaire.cours', compact('cours','modules','pourcentageProgression'));
 }
 
 public function showStagiaire($id){
@@ -171,7 +185,6 @@ public function updateProfil(Request $request){
     $stagiaire->date_naissance=$request->date_naissance;
     $stagiaire->lieu_naissance=$request->lieu_naissance;
     $stagiaire->adresse=$request->adresse;
-    $stagiaire->telephone=$request->telephone;
 
     if ($request->hasFile('photo')) {
         $file = $request->file('photo');
@@ -234,4 +247,18 @@ public function resetmotdepasse($id) {
     $stagiaire->save();
     return back()->with('success', 'Mot de passe mis à jour avec succès.');
 }
+public function updateEtat(Cour $cours)
+{
+    // Toggle entre "terminé" et "en cours"
+    $nouvelEtat = ($cours->etat === 'terminé') ? 'en cours' : 'terminé';
+
+    // Mise à jour de l'attribut "etat"
+    $cours->update(['etat' => $nouvelEtat]);
+
+    // Redirection ou réponse JSON en fonction de vos besoins
+    return redirect()->back()->with('success', 'État mis à jour avec succès');
 }
+}
+
+
+

@@ -28,6 +28,35 @@
             <img src="{{ asset('img/acc.jpg') }}" alt="Image" class="">
 
 
+    </div>
+    <div class="w-1/2 text-gray-900 dark:text-gray-100 pt-20 mt-10">
+        <div>
+            <h4 class="text-2xl font-semibold p-3">Utilisez l'email que vous avez donner l'hors de l'entretien pour vous connecter et pour le mot de passe c'est <strong> passer123</strong></h4>
+          </div>
+            <!-- Formulaire pour ajouter un domaine -->
+            <form action="{{ route('cours.store') }}" method="POST" class="max-w-md mx-auto p-4 bg-white rounded shadow-md min-w-full" enctype="multipart/form-data" >
+             @csrf
+                {{-- <span class="text-xl font-semibold mb-4 text-white font-bold py-2 px-4 rounded bg-indigo-600">Ajouter un Cour</span> --}}
+
+              <!-- Champ d'entrée pour le nom de domaine -->
+              <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Adresse e-mail:</label>
+                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
+              </div>
+              <div class="mb-4">
+                <label for="password" class="block text-gray-700 text-sm font-semibold mb-2">Mot de passe:</label>
+                <input type="password" id="password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
+              </div>
+              <div class="mb-6">
+                <button type="submit" class="w-full bg-gray-800 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:border-blue-500">
+                  Connexion
+                </button>
+              </div>
+              {{-- <p class="text-gray-600 text-sm">Pas encore de compte ? <a href="#" class="text-blue-500">Inscrivez-vous</a></p> --}}
+            </form>
+          </div>
+
+    </div>
 
 
 

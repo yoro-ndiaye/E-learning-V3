@@ -8,6 +8,7 @@ use App\Models\TacheFile;
 use Illuminate\Http\Request;
 use App\Models\TacheStagiaire;
 use App\Models\TemporalyImage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -77,9 +78,8 @@ public function allfiletaches($id){
     ->select('tache_stagiaires.*', 'cours.*', 'tache_files.*')
     ->orderby('tache_stagiaires.id', 'desc')
     ->paginate(10);
-
-    //   dd($tacheStagiaires);
-    return view('stagiaire.allfiletaches',compact('tacheStagiaires'));
+    
+    return view('stagiaire.allfiletaches',compact('tacheStagiaires',));
 }
 
 }

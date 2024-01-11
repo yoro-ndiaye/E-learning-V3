@@ -11,7 +11,13 @@
 
 
           <!--gregregr Carte du module 1 -->
-
+          <div class="container mx-auto p-4">
+            <div class="container mt-5 mb-3">
+              <h2>Progression des cours</h2>
+              <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: {{ $pourcentageProgression }}%;" aria-valuenow="{{ $pourcentageProgression }}" aria-valuemin="0" aria-valuemax="100">{{ $pourcentageProgression }}%</div>
+              </div>
+          </div>
 
           <table class="min-w-full">
             <thead>
@@ -28,7 +34,9 @@
                  <th class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     envoie fichier
                     </th>
-                <!-- Ajoutez plus d'en-têtes de colonnes si nécessaire -->
+                <th class="px-6 py-3 border-b-2 border-gray-300 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                 Etat
+                </th>
               </tr>
             </thead>
 
@@ -65,7 +73,16 @@
                   </a>
 
                   </td>
-                <!-- Ajoutez plus de cellules pour chaque ligne de données -->
+                  <td class="px-6 py-4 text-white whitespace-nowrap border-b border-gray-300">
+    <form action="{{ route('update.etat', $c->id) }}" method="post">
+        @csrf
+        @method('patch') <!-- Utilisez la méthode PATCH pour une mise à jour -->
+
+        <button type="submit" class="bg-{{ $c->etat === 'terminé' ? 'green' : 'yellow' }}-500 hover:bg-{{ $c->etat === 'terminé' ? 'green' : 'yellow' }}-700 text-white font-bold py-2 px-4 rounded">
+            {{ $c->etat }}
+        </button>
+    </form>
+</td>                <!-- Ajoutez plus de cellules pour chaque ligne de données -->
               </tr>
               @endforeach
 

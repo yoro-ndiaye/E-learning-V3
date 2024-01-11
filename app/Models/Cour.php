@@ -14,6 +14,7 @@ class Cour extends Model
         'description',
         'image',
         'ressource',
+        'etat',
         'module_id',
     ];
 

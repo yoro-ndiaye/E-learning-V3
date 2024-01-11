@@ -20,7 +20,7 @@
 
     <div class=" container mx-auto p-4">
         <div class="bg-white p-6 rounded-lg shadow-md">
-            <h1 class="text-2xl font-semibold text-gray-800">Profil de stagiaire</h1>
+            <h1 class="text-2xl font-semibold text-gray-800">Profil de stagiaireeeee</h1>
             <div class="flex">
                 <div class=" mr-4 pr-4">
                     <div class="mt-4">

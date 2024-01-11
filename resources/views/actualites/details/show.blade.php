@@ -40,7 +40,7 @@
             <form action="{{ route('actualites.details.comment', ['tacheStagiaire' => $tacheStagiaire]) }}" method="post">
                 @csrf
                 <div class="flex h-12">
-                    <input class="w-full bg-slate-50 rounded-lg px-5 text-primary-900 focus-outline focus-outline-2 focus-outline-indigo-500" 
+                    <input class="w-full bg-slate-50 rounded-lg px-5 text-indigo-900 focus-outline focus-outline-2 focus-outline-indigo-500" 
                         type="text" name="comment" placeholder="Ajouter votre commentaire..." autocomplete="off">
                     <button class="ml-2 w-12 flex justify-center items-center shrink-0 bg-indigo-700 rounded-full text-indigo-50">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-code" width="24" height="24" 

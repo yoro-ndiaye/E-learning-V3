@@ -13,7 +13,7 @@ class DetailController extends Controller
 {
     public function show(TacheStagiaire $tacheStagiaire)
     {
-        $comments = Comment::paginate(5);
+        $comments = Comment::where('tacheStagiaire_id', $tacheStagiaire->id)->latest()->paginate(5);
         $tacheFiles = TacheFile::where('tache_stagiaires_id', $tacheStagiaire->id)->get();
         return view('actualites.details.show', compact('tacheStagiaire', 'tacheFiles','comments'));
     }
